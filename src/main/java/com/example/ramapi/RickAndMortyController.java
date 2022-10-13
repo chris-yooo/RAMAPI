@@ -26,4 +26,8 @@ public class RickAndMortyController {
 
     @GetMapping("/man")
     public List<RickAndMortyModel> getAllManCharacters() { return rickAndMortyService.getAllManCharacters(); }
+
+    @GetMapping("/aliveman")
+    public List<RickAndMortyModel> getAllAliveManCharacters() { return rickAndMortyService.getAllAliveManCharacters(); }
+
 }
