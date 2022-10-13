@@ -8,6 +8,8 @@ import java.util.List;
 public class RickAndMortyService {
     public static RickAndMortyModel getAllCharacters;
     public static RickAndMortyModel getAllAliveCharacters;
+    public static RickAndMortyModel getAllManCharacters;
+
     private WebClient webClient = WebClient.create("https://rickandmortyapi.com/api");
 
     public List<RickAndMortyModel> getAllCharacters() {
@@ -31,4 +33,15 @@ public List<RickAndMortyModel> getAllAliveCharacters() {
             .getBody();
         return response.getResults();
 }
+
+    public List<RickAndMortyModel> getAllManCharacters() {
+        RickAndMortyResponseElement response = webClient
+                .get()
+                .uri("/character?gender=male")
+                .retrieve()
+                .toEntity(RickAndMortyResponseElement.class)
+                .block()
+                .getBody();
+        return response.getResults();
+    }
 }
