@@ -1,5 +1,6 @@
 package com.example.ramapi;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -11,12 +12,15 @@ public class RickAndMortyService {
     public static RickAndMortyModel getAllManCharacters;
     public static RickAndMortyModel getAllAliveManCharacters;
 
-    private WebClient webClient = WebClient.create("https://rickandmortyapi.com/api");
+    @Value("${url}")
+    private String url;
+
+    private WebClient webClient = WebClient.create();
 
     public List<RickAndMortyModel> getAllCharacters() {
         RickAndMortyResponseElement response = webClient
             .get()
-            .uri("/character")
+            .uri(url + "/character")
             .retrieve()
             .toEntity(RickAndMortyResponseElement.class)
             .block()
@@ -27,7 +31,7 @@ public class RickAndMortyService {
 public List<RickAndMortyModel> getAllAliveCharacters() {
         RickAndMortyResponseElement response = webClient
             .get()
-            .uri("/character?status=alive")
+            .uri(url + "/character?status=alive")
             .retrieve()
             .toEntity(RickAndMortyResponseElement.class)
             .block()
@@ -38,7 +42,7 @@ public List<RickAndMortyModel> getAllAliveCharacters() {
     public List<RickAndMortyModel> getAllManCharacters() {
         RickAndMortyResponseElement response = webClient
                 .get()
-                .uri("/character?gender=male")
+                .uri(url + "/character?gender=male")
                 .retrieve()
                 .toEntity(RickAndMortyResponseElement.class)
                 .block()
@@ -49,7 +53,7 @@ public List<RickAndMortyModel> getAllAliveCharacters() {
     public List<RickAndMortyModel> getAllAliveManCharacters() {
         RickAndMortyResponseElement response = webClient
                 .get()
-                .uri("/character?status=alive&gender=male")
+                .uri(url + "/character?status=alive&gender=male")
                 .retrieve()
                 .toEntity(RickAndMortyResponseElement.class)
                 .block()
